@@ -14,7 +14,7 @@ public class SearcherParallel1 {
 
     @BeforeTest
     public void preCondition() {
-        // set up source for search activities
+        // set up sources for search activities
         System.setProperty("webdriver.chrome.driver", "src\\main\\resources\\chromedriver.exe");
         driver = new ChromeDriver();
         String urlHomePage = "https://www.google.com/";
@@ -23,13 +23,14 @@ public class SearcherParallel1 {
 
     @Test
     public void searchItem() {
-        // go to google.com / take
+        // put item name into search field and click "Search in Google"
         driver.findElement(By.xpath(SEARCH_FIELD)).sendKeys(SEARCH_ITEM);
         driver.findElement(By.xpath(SEARCH_BUTTON)).click();
     }
 
     @AfterTest
     public void afterTest() throws InterruptedException {
+        // wait 5 seconds after search test is done and terminate browser
         Thread.sleep(5000);
         driver.close();
     }
