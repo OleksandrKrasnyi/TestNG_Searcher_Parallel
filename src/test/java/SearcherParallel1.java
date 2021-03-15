@@ -1,6 +1,8 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -21,17 +23,18 @@ public class SearcherParallel1 {
         driver.get(urlHomePage);
     }
 
-    @Test
+    @Test(priority = 1)
     public void searchItem() {
         // put item name into search field and click "Search in Google"
         driver.findElement(By.xpath(SEARCH_FIELD)).sendKeys(SEARCH_ITEM);
         driver.findElement(By.xpath(SEARCH_BUTTON)).click();
+        String title = driver.getTitle();
+        Assert.assertEquals(title, SEARCH_ITEM + " - Поиск в Google", "Title is not matched");
     }
 
     @AfterTest
-    public void afterTest() throws InterruptedException {
-        // wait 5 seconds after search test is done and terminate browser
-        Thread.sleep(5000);
+    public void afterTest() {
+        // after search test is done and terminate browser
         driver.close();
     }
 }
