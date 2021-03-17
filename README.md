@@ -1,4 +1,4 @@
-## TestNG Searcher Parallel (NOT PARALLEL AT THIS STAGE
+## TestNG Searcher Parallel (NOT PARALLEL AT THIS STAGE)
 
 This maven project contains  
 1 same test which runs 3 times and each time different data inputted.
