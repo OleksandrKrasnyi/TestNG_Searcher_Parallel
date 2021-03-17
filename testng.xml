@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="All Search Tests Suite" parallel="tests" thread-count="3">
+<suite name="All Search Tests Suite">
 
-    <test name="test1">
+    <test name="testDataDriven">
         <classes>
-            <class name="SearcherParallel1"/>
+            <class name="SearcherDataDriven">
+                <methods>
+                    <include name="searchItem"/>
+                </methods>
+            </class>
         </classes>
     </test>
 
-    <test name="test2">
-        <classes>
-            <class name="SearcherParallel2"/>
-        </classes>
-    </test>
-
-    <test name="test3">
-        <classes>
-            <class name="SearcherParallel3"/>
-        </classes>
-    </test>
 
 </suite>

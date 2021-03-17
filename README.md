@@ -1,14 +1,11 @@
-## TestNG Searcher Parallel
+## TestNG Searcher Parallel (NOT PARALLEL AT THIS STAGE
 
 This maven project contains  
-3 tests which can be run **separately** or **in parallel**.
+1 same test which runs 3 times and each time different data inputted.
 
  
-To start tests **separately** run one of files below:   
-[SearcherParallel1](src/test/java/SearcherParallel1.java)  
-[SearcherParallel2](src/test/java/SearcherParallel1.java)  
-[SearcherParallel3](src/test/java/SearcherParallel1.java)
-
-To run all 3 tests **in parallel** run file:  
+To start testing run file:   
+[SearcherDataDriven](src/test/java/SearcherDataDriven.java)  
+Or:  
 [testng.xml](testng.xml)  
 
