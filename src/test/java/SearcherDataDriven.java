@@ -1,4 +1,5 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -9,8 +10,7 @@ import java.time.Duration;
 public class SearcherDataDriven {
 
     private WebDriver driver;
-    public static final String SEARCH_FIELD = "/html/body/div[1]/div[3]/form/div[2]/div[1]/div[1]/div/div[2]/input";
-    public static final String SEARCH_BUTTON = "/html/body/div[1]/div[3]/form/div[2]/div[1]/div[3]/center/input[1]";
+    public static final String SEARCH_FIELD = "//input[@name='q']";
 
     @BeforeMethod
     public void setUp() {
@@ -19,7 +19,11 @@ public class SearcherDataDriven {
         driver = new ChromeDriver();
 
         driver.manage().window().maximize();
-        driver.manage().deleteAllCookies();
+
+        //Implicit wait:
+        //1. always applied globally -- is available for all web-elements
+        //2. Dynamic in nature
+        //3. Can be changed anywhere and anytime in code
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(20));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
 
@@ -43,8 +47,7 @@ public class SearcherDataDriven {
     public void searchItem(String SEARCH_ITEM) {
         // put item name into search field and click "Search in Google"
         driver.findElement(By.xpath(SEARCH_FIELD)).clear();
-        driver.findElement(By.xpath(SEARCH_FIELD)).sendKeys(SEARCH_ITEM);
-        driver.findElement(By.xpath(SEARCH_BUTTON)).click();
+        driver.findElement(By.xpath(SEARCH_FIELD)).sendKeys(SEARCH_ITEM + Keys.ENTER);
 
         String title = driver.getTitle();
         Assert.assertEquals(title, SEARCH_ITEM + " - Поиск в Google", "Title is not matched");
@@ -55,4 +58,27 @@ public class SearcherDataDriven {
         // terminate browser after search test is done
         driver.quit();
     }
+
+//    //Explicit Wait:
+//    //1. No explicit keyword or method
+//    //2. Dynamic in nature
+//    //3. Specific to element
+//    //4. Available with WebDriverWait with some ExpectedConditions
+//    public static void sendKeys(WebDriver driver, WebElement element, int timeout, String value) {
+//
+//        new WebDriverWait(driver, Duration.ofSeconds(timeout))
+//                .until(ExpectedConditions.visibilityOf(element));
+//        element.sendKeys(value);
+//
+//    }
+//
+//    public static void clickOn(WebDriver driver, WebElement element, int timeout) {
+//        new WebDriverWait(driver, Duration.ofSeconds(timeout))
+//                .until(ExpectedConditions.elementToBeClickable(element));
+//        element.click();
+//    }
+//
+//    //Implicit and Explicit Waits should never be used together
+//    //-- Selenium WebDriver will wait fot the element first because of Impl.w and the Expl.w will be applied
+//    //hence, total sync wait will be increased for each element
 }
