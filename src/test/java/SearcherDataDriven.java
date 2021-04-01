@@ -1,11 +1,16 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.time.Duration;
+import java.util.NoSuchElementException;
+import java.util.function.Function;
 
 public class SearcherDataDriven {
 
@@ -48,6 +53,18 @@ public class SearcherDataDriven {
         // put item name into search field and click "Search in Google"
         driver.findElement(By.xpath(SEARCH_FIELD)).clear();
         driver.findElement(By.xpath(SEARCH_FIELD)).sendKeys(SEARCH_ITEM + Keys.ENTER);
+
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver)
+                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofSeconds(5))
+                .ignoring(NoSuchElementException.class);
+
+        WebElement firstLink = wait.until(new Function<WebDriver, WebElement>() {
+            @Override
+            public WebElement apply(WebDriver webDriver) {
+                return driver.findElement(By.xpath("//*[@id='tads']/descendant::a[1]/child::div[1]"));
+            }
+        });
 
         String title = driver.getTitle();
         Assert.assertEquals(title, SEARCH_ITEM + " - Поиск в Google", "Title is not matched");
